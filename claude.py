@@ -6,6 +6,7 @@ Shows how to use the Converse API with Anthropic Claude 3 Sonnet (on demand).
 
 import logging
 import boto3
+import os
 
 from botocore.exceptions import ClientError
 
@@ -87,8 +88,8 @@ def get_product_details_csv(links: str, SYSTEM_PROMPT=DEFAULT_SYSTEM_PROMPT):
     try:
 
         bedrock_client = boto3.client("bedrock-runtime", region_name="us-west-2",
-                                      aws_access_key_id="",
-                                      aws_secret_access_key=""
+                                      aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+                                      aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"]
                                       )
 
         response = generate_conversation(bedrock_client, model_id, system_prompts, [message])
